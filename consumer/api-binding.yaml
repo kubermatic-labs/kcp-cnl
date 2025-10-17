@@ -1,0 +1,26 @@
+apiVersion: apis.kcp.io/v1alpha2
+kind: APIBinding
+metadata:
+  name: databases.internal.example
+spec:
+  reference:
+    export:
+      name: databases.internal.example
+      path: "root:provider"
+  permissionClaims:
+  - resource: namespaces
+    verbs: ["*"]
+    state: Accepted
+    selector:
+      matchAll: true
+  - resource: secrets
+    verbs: ["*"]
+    state: Accepted
+    selector:
+      matchAll: true
+  - resource: events
+    verbs: ["*"]
+    state: Accepted
+    selector:
+      matchAll: true
+

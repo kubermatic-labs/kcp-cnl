@@ -1,0 +1,24 @@
+apiVersion: syncagent.kcp.io/v1alpha1
+kind: PublishedResource
+metadata:
+  name: databases.internal.example
+spec:
+  resource:
+    kind: Cluster
+    apiGroup: postgresql.cnpg.io
+    versions: [v1]
+  naming:
+    name: "{{ .Object.metadata.name }}"
+  related:
+    - identifier: database-credentials
+      origin: service
+      kind: Secret
+      object:
+        selector:
+          matchLabels:
+            cnpg.io/cluster: "{{ .RemoteObject.metadata.name }}"
+          rewrite:
+            template:
+              template: "{{ .Value }}"
+          # we don't need to use a namespaceSelector as sync-agent
+          # by default uses the namespace of the RemoteObject

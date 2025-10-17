@@ -1,0 +1,4 @@
+externalHostname: "kcp-cnl.lab.kubermatic.io"
+kcpFrontProxy:
+  service:
+    type: LoadBalancer
