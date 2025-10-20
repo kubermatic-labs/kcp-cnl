@@ -53,7 +53,7 @@ kubectl apply -f kcp/admin-client-cert-request.yaml
 kubectl get secret cluster-admin-client-cert -o=jsonpath='{.data.tls\.crt}' | base64 -d > client.crt
 kubectl get secret cluster-admin-client-cert -o=jsonpath='{.data.tls\.key}' | base64 -d > client.key
 chmod 600 client.crt client.key
-kubectl --kubeconfig=kcp-admin.kubeconfig config set-credentials kcp-admin --client-certificate=client.crt --client-key=client.key
+kubectl --kubeconfig=kcp-admin.kubeconfig config set-credentials kcp-admin --client-certificate=client.crt --client-key=client.key --embed-certs=true
 kubectl --kubeconfig=kcp-admin.kubeconfig config set-context base --cluster=base --user=kcp-admin
 kubectl --kubeconfig=kcp-admin.kubeconfig config set-context root --cluster=root --user=kcp-admin
 kubectl --kubeconfig=kcp-admin.kubeconfig config use-context root
