@@ -81,7 +81,7 @@ kubectl apply --server-side -f \
 
 
 
-# TODO Live Demo
+# Live Demo
 
 ## Create the Provider workspace
 
