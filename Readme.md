@@ -18,7 +18,6 @@ following commands are all in kcp Kubernetes cluster
 export KUBECONFIG=kcp-cluster.kubeconfig
 ```
 
-
 ```sh
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.18.2/cert-manager.crds.yaml
 helm upgrade \
@@ -78,8 +77,6 @@ export KUBECONFIG=provider.kubeconfig
 kubectl apply --server-side -f \
   https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/release-1.27/releases/cnpg-1.27.0.yaml
 ```
-
-
 
 # Live Demo
 
