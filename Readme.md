@@ -80,15 +80,9 @@ kubectl apply --server-side -f \
 
 # Live Demo
 
-## Create the Provider workspace
+## Create the Provider kcp kubeconfig
 
-```sh
-k apply -f provider/databases-apiexport.yaml
-```
-
-## Install kcp-api-syncagent
-
-Create the provider kubeconfig. Note for breviety we are just re-using the admin certificate here.
+Create the provider kcp kubeconfig. Note for breviety we are just re-using the admin certificate here.
 For prod setups, of course you would re-use the Certificate approach outlined earlier.
 
 ```sh
@@ -97,9 +91,19 @@ kubectl --kubeconfig=provider-kcp.kubeconfig config set-credentials kcp-admin --
 kubectl --kubeconfig=provider-kcp.kubeconfig config set-cluster "workspace.kcp.io/current" --server https://$KCP_EXTERNAL_HOSTNAME:8443/clusters/root:provider --certificate-authority=ca.crt --embed-certs=true
 ```
 
+## Create the empty databases-apiexport
+
+```sh
+export KUBECONFIG="provider-kcp.kubeconfig"
+k apply -f provider/databases-apiexport.yaml
+```
+
+## Install kcp-api-syncagent
+
 Install kcp-api-syncagent:
 
 ```sh
+export KUBECONFIG=provider.kubeconfig
 kubectl create namespace kcp-sync-agent
 kubectl create secret generic kcp-kubeconfig -n kcp-sync-agent --from-file=kubeconfig=provider-kcp.kubeconfig
 kubectl apply -f api-syncagent/rbac.yaml
@@ -115,6 +119,7 @@ helm upgrade \
 ## Create the published resource
 
 ```sh
+export KUBECONFIG=provider.kubeconfig
 kubectl apply -f api-syncagent/published-resource.yaml
 ```
 
@@ -135,6 +140,7 @@ kubectl apply -f consumer/api-binding.yaml
 ```
 
 ```sh
+export KUBECONFIG=consumer-kcp.kubeconfig
 kubectl apply -f consumer/postgres-cluster.yaml
 ```
 
